@@ -40,6 +40,7 @@ A curated list of open-source tools, standards, and platforms for observing, tra
 - [TruLens](https://github.com/truera/trulens) — Evaluation and tracking framework for LLM apps and agents using instrumentation and feedback functions.
 - [UpTrain](https://github.com/uptrain-ai/uptrain) — Open-source platform to evaluate and improve LLM applications with 20+ pre-built checks and root-cause analysis.
 - [Evidently](https://github.com/evidentlyai/evidently) — Open-source Python framework to evaluate, test, and monitor ML and LLM systems across tabular, text, and GenAI data.
+- [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) — Open-source benchmark framework for browser agents on everyday tasks across live websites, with isolated runs and five-layer session evidence for post-run evaluation.
 
 ## Gateways & proxies
 
