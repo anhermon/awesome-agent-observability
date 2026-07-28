@@ -1,63 +1,105 @@
-# Awesome Agent Observability
+# Awesome Agent Observability [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-[![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+> Curated tools, standards, and platforms for tracing, evaluating, and governing LLM and AI-agent applications.
 
-A curated list of open-source tools, standards, and platforms for observing, tracing, evaluating, and governing LLM and AI-agent applications.
+Agents fail in ways ordinary services do not: a run is non-deterministic, spans a dozen model and tool calls, and "wrong" is a quality judgement rather than a status code. The projects below cover the resulting stack — OpenTelemetry conventions for GenAI, tracing backends, evaluation harnesses, guardrails, gateways, and Model Context Protocol tooling.
+
+Every entry was checked to resolve and to have been updated within the last 12 months at the time of the last audit (2026-07-28). Descriptions say what a project does, not what it markets.
 
 ## Contents
 
-- [Standards & instrumentation](#standards--instrumentation)
-- [Tracing & observability platforms](#tracing--observability-platforms)
-- [Eval & testing](#eval--testing)
-- [Gateways & proxies](#gateways--proxies)
-- [Governance & guardrails](#governance--guardrails)
-- [MCP-specific](#mcp-specific)
+- [Standards and instrumentation](#standards-and-instrumentation)
+- [Tracing and observability platforms](#tracing-and-observability-platforms)
+- [Trace backends](#trace-backends)
+- [Evaluation and testing](#evaluation-and-testing)
+- [Guardrails and security](#guardrails-and-security)
+- [Gateways and proxies](#gateways-and-proxies)
+- [Model Context Protocol](#model-context-protocol)
+- [Agent frameworks with built-in tracing](#agent-frameworks-with-built-in-tracing)
 
-## Standards & instrumentation
+## Standards and instrumentation
 
-- [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai) — Official OpenTelemetry repo defining GenAI spans, metrics, and events for LLM clients, MCP, and provider-specific conventions.
-- [OpenLLMetry (Traceloop)](https://github.com/traceloop/openllmetry) — Open-source OpenTelemetry-based instrumentation for LLM apps, auto-tracing providers and vector DBs to any OTel backend.
-- [OpenLIT](https://github.com/openlit/openlit) — OpenTelemetry-native observability platform covering LLM tracing, GPU monitoring, evaluations, guardrails, and prompt management.
+- [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai) - Repository that now owns the GenAI spans, metrics, and events, moved out of the main semantic-conventions repo.
+- [OpenTelemetry Semantic Conventions](https://github.com/open-telemetry/semantic-conventions) - Parent repo for all OTel conventions, including the HTTP, RPC, and database spans an agent stack also emits.
+- [OpenTelemetry GenAI Observability SIG](https://github.com/open-telemetry/community/blob/main/projects/gen-ai.md) - Charter and scope of the OTel project group driving GenAI telemetry; the place to track where the conventions are heading.
+- [OpenTelemetry Python GenAI instrumentation](https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation-genai) - Upstream instrumentation packages for OpenAI, Anthropic, Google GenAI, VertexAI, LangChain, and the Claude Agent SDK.
+- [OpenLLMetry](https://github.com/traceloop/openllmetry) - OpenTelemetry-based auto-instrumentation for Python LLM apps, exporting to any OTel backend.
+- [OpenLLMetry-JS](https://github.com/traceloop/openllmetry-js) - The same instrumentation for TypeScript and Node.js applications.
+- [OpenInference](https://github.com/Arize-ai/openinference) - OTel-compatible instrumentation spec and libraries from the Phoenix team, spanning Python, JS, and Java.
+- [OpenLIT](https://github.com/openlit/openlit) - OTel-native platform bundling LLM tracing, GPU monitoring, evaluations, guardrails, and prompt management.
 
-## Tracing & observability platforms
+## Tracing and observability platforms
 
-- [Langfuse](https://github.com/langfuse/langfuse) — Open-source LLM engineering platform for tracing, prompt management, evaluation, and debugging of AI applications.
-- [Arize Phoenix](https://github.com/Arize-ai/phoenix) — Open-source AI observability and evaluation platform for tracing, benchmarking, datasets, and prompt experimentation.
-- [LangSmith](https://github.com/langchain-ai/langsmith-sdk) — Platform (with SDK) to debug, evaluate, and monitor LLM applications and agents, with native LangChain integration.
-- [Helicone](https://github.com/Helicone/helicone) — Open-source LLM observability platform and AI gateway to monitor, evaluate, and route requests across many models.
-- [Opik (Comet)](https://github.com/comet-ml/opik) — Open-source platform for tracing, evaluating, and optimizing LLM and agentic applications from prototype to production.
-- [LangWatch](https://github.com/langwatch/langwatch) — OpenTelemetry-based platform for testing, simulating, evaluating, and monitoring AI agents before and after deployment.
-- [Laminar (lmnr)](https://github.com/lmnr-ai/lmnr) — Open-source observability platform purpose-built for AI agents, providing tracing, monitoring, and evaluation.
-- [Agenta](https://github.com/Agenta-AI/agenta) — Open-source LLMOps platform combining prompt management, evaluation, and OpenTelemetry-native observability.
-- [Pydantic Logfire](https://github.com/pydantic/logfire) — OpenTelemetry-based observability platform from the Pydantic team with deep Python and LLM/agent tracing.
-- [W&B Weave](https://github.com/wandb/weave) — Weights & Biases toolkit to log, debug, and evaluate LLM/GenAI applications across experimentation and production.
+- [Langfuse](https://github.com/langfuse/langfuse) - Self-hostable tracing, prompt management, datasets, and evals; ingests OTel as well as its own SDKs.
+- [Arize Phoenix](https://github.com/Arize-ai/phoenix) - Self-hostable trace viewer and eval workbench that runs locally in a notebook or as a server.
+- [LangSmith](https://docs.smith.langchain.com/) - Hosted tracing and eval product from LangChain; the [client SDKs](https://github.com/langchain-ai/langsmith-sdk) are open source, the backend is not.
+- [Helicone](https://github.com/Helicone/helicone) - Proxy-based observability: point your base URL at it and get request logs, cost, and caching without code changes.
+- [Opik](https://github.com/comet-ml/opik) - Comet's open-source tracing and evaluation platform for LLM and agent workflows.
+- [LangWatch](https://github.com/langwatch/langwatch) - OTel-based platform pairing production monitoring with pre-deploy agent simulation.
+- [Laminar](https://github.com/lmnr-ai/lmnr) - Rust-backed open-source tracing and eval platform aimed specifically at agent runs.
+- [Agenta](https://github.com/Agenta-AI/agenta) - Workspace for building and running agents that traces every model and tool call with token and cost attribution.
+- [Pydantic Logfire](https://github.com/pydantic/logfire) - OTel-based observability with first-class Python, Pydantic, and agent instrumentation.
+- [W&B Weave](https://github.com/wandb/weave) - Weights & Biases toolkit for logging, comparing, and evaluating LLM app versions; [docs](https://weave-docs.wandb.ai/).
+- [MLflow Tracing](https://mlflow.org/docs/latest/genai/tracing/) - GenAI tracing built into [MLflow](https://github.com/mlflow/mlflow), so agent traces sit next to model runs and registries.
+- [Braintrust](https://www.braintrust.dev/docs/guides/traces) - Hosted eval and tracing platform; the scoring library [autoevals](https://github.com/braintrustdata/autoevals) is open source.
+- [AgentOps](https://github.com/AgentOps-AI/agentops) - Python SDK for session replay, cost tracking, and benchmarking across CrewAI, OpenAI Agents, LangChain, and AG2.
 
-## Eval & testing
+## Trace backends
 
-- [Ragas](https://github.com/explodinggradients/ragas) — Python toolkit for evaluating and optimizing LLM applications with objective metrics and test-set generation.
-- [DeepEval](https://github.com/confident-ai/deepeval) — Open-source, Pytest-like LLM evaluation framework with research-backed metrics such as G-Eval and answer relevancy.
-- [Promptfoo](https://github.com/promptfoo/promptfoo) — CLI and library for evaluating and red-teaming LLM apps by testing prompts and comparing models.
-- [TruLens](https://github.com/truera/trulens) — Evaluation and tracking framework for LLM apps and agents using instrumentation and feedback functions.
-- [UpTrain](https://github.com/uptrain-ai/uptrain) — Open-source platform to evaluate and improve LLM applications with 20+ pre-built checks and root-cause analysis.
-- [Evidently](https://github.com/evidentlyai/evidently) — Open-source Python framework to evaluate, test, and monitor ML and LLM systems across tabular, text, and GenAI data.
+General-purpose OpenTelemetry backends that GenAI spans can be sent to when you do not want an LLM-specific product.
 
-## Gateways & proxies
+- [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector) - Vendor-neutral pipeline to receive, process, filter, and fan out traces before they reach a backend.
+- [SigNoz](https://github.com/SigNoz/signoz) - OTel-native, self-hostable traces, metrics, and logs in one UI.
+- [Jaeger](https://github.com/jaegertracing/jaeger) - CNCF distributed tracing backend; the default choice for plain span storage and search.
+- [Grafana Tempo](https://github.com/grafana/tempo) - High-volume trace store backed by object storage, queried from Grafana.
 
-- [LiteLLM](https://github.com/BerriAI/litellm) — Python SDK and proxy/AI gateway calling 100+ LLM APIs in OpenAI format with cost tracking, logging, and guardrails.
-- [Portkey AI Gateway](https://github.com/Portkey-AI/gateway) — Open-source AI gateway routing to many LLM providers with integrated guardrails, retries, fallbacks, and caching.
-- [Traceloop Hub](https://github.com/traceloop/hub) — Open-source, high-performance LLM gateway in Rust providing a unified provider API with built-in observability.
+## Evaluation and testing
 
-## Governance & guardrails
+- [Ragas](https://github.com/vibrantlabsai/ragas) - Metrics and test-set generation for RAG and agent pipelines (repo moved from `explodinggradients/ragas`).
+- [DeepEval](https://github.com/confident-ai/deepeval) - Pytest-style eval framework with G-Eval, hallucination, and relevancy metrics.
+- [Promptfoo](https://github.com/promptfoo/promptfoo) - Declarative CLI for prompt/model comparison plus LLM red-teaming and vulnerability scanning in CI.
+- [TruLens](https://github.com/truera/trulens) - Instrumentation plus feedback functions that score app internals, not just final output.
+- [Evidently](https://github.com/evidentlyai/evidently) - Python framework for evals, drift detection, and monitoring across tabular, text, and GenAI systems.
+- [Inspect](https://github.com/UKGovernmentBEIS/inspect_ai) - UK AI Security Institute's eval framework, built for agentic tasks, tool use, and sandboxed execution.
+- [OpenAI Evals](https://github.com/openai/evals) - Eval framework and benchmark registry from OpenAI; broadly used, but the repo moves slowly.
+- [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) - EleutherAI's standard harness for few-shot academic benchmarks across model backends.
+- [Lighteval](https://github.com/huggingface/lighteval) - Hugging Face evaluation runner supporting transformers, vLLM, and API backends.
+- [Giskard](https://github.com/Giskard-AI/giskard-oss) - Scans LLM agents for hallucination, prompt injection, and bias, and turns findings into test suites.
+- [Scenario](https://github.com/langwatch/scenario) - Simulates multi-turn users against an agent so conversations, not single calls, can be asserted on.
+- [Promptflow](https://github.com/microsoft/promptflow) - Microsoft's flow authoring, batch evaluation, and tracing toolkit for LLM apps.
+- [Autoevals](https://github.com/braintrustdata/autoevals) - Standalone library of model-graded and heuristic scorers usable outside Braintrust.
 
-- [Guardrails AI](https://github.com/guardrails-ai/guardrails) — Python framework running input/output guards on LLMs to detect risks and generate validated structured output.
+## Guardrails and security
 
-## MCP-specific
+- [Guardrails AI](https://github.com/guardrails-ai/guardrails) - Runs input/output validators around a model call and enforces structured output.
+- [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) - NVIDIA toolkit for programmable dialogue rails defined in Colang.
+- [garak](https://github.com/NVIDIA/garak) - LLM vulnerability scanner probing for jailbreaks, prompt injection, and data leakage.
+- [Presidio](https://github.com/data-privacy-stack/presidio) - PII detection, redaction, and anonymisation for text and images; useful for scrubbing traces before export.
 
-- [mcp-trace](https://github.com/anhermon/mcp-trace) — Transparent Go proxy for MCP servers that emits OpenTelemetry spans for every JSON-RPC tool call.
-- [MCP Inspector](https://github.com/modelcontextprotocol/inspector) — Official developer tool for interactively testing and debugging Model Context Protocol servers via a web UI and proxy.
+## Gateways and proxies
+
+- [LiteLLM](https://github.com/BerriAI/litellm) - SDK and proxy exposing 100+ providers behind the OpenAI API, with cost tracking, logging, and callbacks to most platforms above.
+- [Portkey AI Gateway](https://github.com/Portkey-AI/gateway) - Routing gateway with retries, fallbacks, caching, and inline guardrails.
+- [Bifrost](https://github.com/maximhq/bifrost) - Go gateway focused on low overhead at high request rates, with load balancing and guardrails.
+- [Traceloop Hub](https://github.com/traceloop/hub) - Small Rust LLM gateway from the OpenLLMetry authors, with OTel emission built in.
+- [Kong](https://github.com/Kong/kong) - Mature API gateway whose AI plugins add LLM routing, token metrics, and logging to existing infrastructure.
+
+## Model Context Protocol
+
+- [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) - The specification itself; the source of truth for what a compliant client, server, and transport must do.
+- [MCP Inspector](https://github.com/modelcontextprotocol/inspector) - Official UI for calling an MCP server's tools by hand and reading the raw JSON-RPC traffic.
+- [mcp-trace](https://github.com/anhermon/mcp-trace) - Small Go proxy that sits in front of an MCP server and emits an OpenTelemetry span per JSON-RPC tool call.
+- [ToolHive](https://github.com/stacklok/toolhive) - Runs MCP servers in containers with permission policies, secrets handling, and audit logging.
+- [MCPJungle](https://github.com/mcpjungle/MCPJungle) - Self-hosted registry and single proxy endpoint for the MCP servers an organisation runs.
+- [Docker MCP Gateway](https://github.com/docker/mcp-gateway) - Docker CLI plugin that fronts multiple MCP servers behind one gateway with container isolation.
+- [Snyk agent-scan](https://github.com/snyk/agent-scan) - Security scanner for MCP servers, agents, and skills; formerly Invariant Labs' `mcp-scan`.
+
+## Agent frameworks with built-in tracing
+
+- [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) - Ships a built-in tracing layer with exporters to third-party platforms.
+- [Google ADK](https://github.com/google/adk-python) - Agent toolkit with built-in evaluation and OpenTelemetry-based tracing.
+- [Pydantic AI](https://github.com/pydantic/pydantic-ai) - Agent framework instrumented with OpenTelemetry out of the box, viewable in Logfire or any OTel backend.
 
 ## Contributing
 
-Contributions are welcome — open an issue or pull request to suggest a tool. Please keep entries open-source and observability-focused, and include a one-line description.
-
-Curated by Angel Hermon ([anhermon](https://github.com/anhermon)).
+See [CONTRIBUTING.md](CONTRIBUTING.md). Suggestions and corrections welcome, especially for anything on this list that has gone stale.
