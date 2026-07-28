@@ -68,6 +68,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [Scenario](https://github.com/langwatch/scenario) - Simulates multi-turn users against an agent so conversations, not single calls, can be asserted on.
 - [Promptflow](https://github.com/microsoft/promptflow) - Microsoft's flow authoring, batch evaluation, and tracing toolkit for LLM apps.
 - [Autoevals](https://github.com/braintrustdata/autoevals) - Standalone library of model-graded and heuristic scorers usable outside Braintrust.
+- [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) - Live-web benchmark for evaluating browser and computer-use agents on 283 everyday tasks across 163 websites, with request interception and five execution-evidence layers.
 
 ## Guardrails and security
 
