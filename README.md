@@ -4,7 +4,7 @@
 
 Agents fail in ways ordinary services do not: a run is non-deterministic, spans a dozen model and tool calls, and "wrong" is a quality judgement rather than a status code. The projects below cover the resulting stack — OpenTelemetry conventions for GenAI, tracing backends, evaluation harnesses, guardrails, gateways, and Model Context Protocol tooling.
 
-Every entry was checked to resolve and to have been updated within the last 12 months at the time of the last audit (2026-07-28). Descriptions say what a project does, not what it markets.
+Every entry was checked to resolve and to have been updated within the last 12 months at the time of the last audit (2026-07-30). Descriptions say what a project does, not what it markets.
 
 ## Contents
 
