@@ -37,6 +37,7 @@ Every entry was checked to resolve and to have been updated within the last 12 m
 - [Opik](https://github.com/comet-ml/opik) - Comet's open-source tracing and evaluation platform for LLM and agent workflows.
 - [LangWatch](https://github.com/langwatch/langwatch) - OTel-based platform pairing production monitoring with pre-deploy agent simulation.
 - [Laminar](https://github.com/lmnr-ai/lmnr) - Rust-backed open-source tracing and eval platform aimed specifically at agent runs.
+- [Langtrace](https://github.com/Scale3-Labs/langtrace) - OpenTelemetry-based, self-hostable tracing and evaluation for LLM calls, vector-DB queries, and framework usage, with Python and TypeScript SDKs.
 - [Agenta](https://github.com/Agenta-AI/agenta) - Self-hostable workspace for authoring and versioning prompts and agents, with evaluation runs and tracing of each model and tool call.
 - [Pydantic Logfire](https://github.com/pydantic/logfire) - OTel-based observability with first-class Python, Pydantic, and agent instrumentation.
 - [W&B Weave](https://github.com/wandb/weave) - Weights & Biases toolkit for logging, comparing, and evaluating LLM app versions; [docs](https://docs.wandb.ai/weave).
@@ -76,6 +77,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) - NVIDIA toolkit for programmable dialogue rails defined in Colang.
 - [garak](https://github.com/NVIDIA/garak) - LLM vulnerability scanner probing for jailbreaks, prompt injection, and data leakage.
 - [Presidio](https://github.com/data-privacy-stack/presidio) - PII detection, redaction, and anonymisation for text and images; useful for scrubbing traces before export.
+- [Invariant Guardrails](https://github.com/invariantlabs-ai/invariant) - Rule-based guardrail layer deployed between an app and its MCP servers or LLM provider; rules are Python-like matchers over tool-call sequences, so it can block a call pattern (e.g. "read one tool's output, then send it to an untrusted address") rather than just a single message.
 
 ## Gateways and proxies
 
@@ -89,6 +91,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 
 - [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) - The specification itself; the source of truth for what a compliant client, server, and transport must do.
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector) - Official UI for calling an MCP server's tools by hand and reading the raw JSON-RPC traffic.
+- [MCP Registry](https://github.com/modelcontextprotocol/registry) - Official community registry service for publishing and discovering MCP servers, run by the same working group as the spec.
 - [mcp-trace](https://github.com/anhermon/mcp-trace) - Small Go proxy that sits in front of an MCP server and emits an OpenTelemetry span per JSON-RPC tool call.
 - [ToolHive](https://github.com/stacklok/toolhive) - Runs MCP servers in containers with permission policies, secrets handling, and audit logging.
 - [MCPJungle](https://github.com/mcpjungle/MCPJungle) - Self-hosted registry and single proxy endpoint for the MCP servers an organisation runs.
