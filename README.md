@@ -70,6 +70,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [Promptflow](https://github.com/microsoft/promptflow) - Microsoft's flow authoring, batch evaluation, and tracing toolkit for LLM apps.
 - [Autoevals](https://github.com/braintrustdata/autoevals) - Standalone library of model-graded and heuristic scorers usable outside Braintrust.
 - [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) - Live-web benchmark for evaluating browser and computer-use agents on 283 everyday tasks across 144 websites, with request interception and five execution-evidence layers.
+- [Agent QA](https://github.com/vostride/agent-qa) - Runs natural-language web/mobile application flows and records structured step evidence plus pass/fail results; it does not trace or score model or agent calls.
 
 ## Guardrails and security
 
