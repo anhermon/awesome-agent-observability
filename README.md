@@ -82,6 +82,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 ## Gateways and proxies
 
 - [LiteLLM](https://github.com/BerriAI/litellm) - SDK and proxy exposing 100+ providers behind the OpenAI API, with cost tracking, logging, and callbacks to most platforms above.
+- [XiuRouter](https://docs.xiu.ai/en/router/) - Hosted model gateway supporting OpenAI Chat Completions, OpenAI Responses, Anthropic Messages, and Gemini GenerateContent, with per-request token, cost, status, and latency records in its console.
 - [Portkey AI Gateway](https://github.com/Portkey-AI/gateway) - Routing gateway with retries, fallbacks, caching, and inline guardrails.
 - [Bifrost](https://github.com/maximhq/bifrost) - Go gateway that fronts multiple LLM providers behind one OpenAI-compatible API, with key load balancing, fallbacks, and plugin hooks for guardrails and telemetry.
 - [Traceloop Hub](https://github.com/traceloop/hub) - Small Rust LLM gateway from the OpenLLMetry authors, with OTel emission built in.
