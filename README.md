@@ -93,6 +93,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector) - Official UI for calling an MCP server's tools by hand and reading the raw JSON-RPC traffic.
 - [MCP Registry](https://github.com/modelcontextprotocol/registry) - Official community registry service for publishing and discovering MCP servers, run by the same working group as the spec.
 - [mcp-trace](https://github.com/anhermon/mcp-trace) - Small Go proxy that sits in front of an MCP server and emits an OpenTelemetry span per JSON-RPC tool call.
+- [Gram](https://github.com/speakeasy-api/gram) - Connects agents to MCPs while applying policies, controlling access, and recording tool and access events.
 - [ToolHive](https://github.com/stacklok/toolhive) - Runs MCP servers in containers with permission policies, secrets handling, and audit logging.
 - [MCPJungle](https://github.com/mcpjungle/MCPJungle) - Self-hosted registry and single proxy endpoint for the MCP servers an organisation runs.
 - [Docker MCP Gateway](https://github.com/docker/mcp-gateway) - Docker CLI plugin that fronts multiple MCP servers behind one gateway with container isolation.
