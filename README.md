@@ -70,6 +70,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [Promptflow](https://github.com/microsoft/promptflow) - Microsoft's flow authoring, batch evaluation, and tracing toolkit for LLM apps.
 - [Autoevals](https://github.com/braintrustdata/autoevals) - Standalone library of model-graded and heuristic scorers usable outside Braintrust.
 - [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) - Live-web benchmark for evaluating browser and computer-use agents on 283 everyday tasks across 144 websites, with request interception and five execution-evidence layers.
+- [HermesGate](https://github.com/hermes-labs-ai/hermes-gate) - Receipt-bound completion rail that runs a repository's own checks, records which content and tool versions were checked, and reuses a PASS only while those bytes still match, so an agent's own PR gets a repeatable, deterministic pre-review result.
 
 ## Guardrails and security
 
