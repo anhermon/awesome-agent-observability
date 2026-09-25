@@ -44,6 +44,8 @@ Every entry was checked to resolve and to have been updated within the last 12 m
 - [MLflow Tracing](https://mlflow.org/docs/latest/genai/tracing/) - GenAI tracing built into [MLflow](https://github.com/mlflow/mlflow), so agent traces sit next to model runs and registries.
 - [Braintrust](https://www.braintrust.dev/docs/instrument) - Hosted eval and tracing platform; the scoring library [autoevals](https://github.com/braintrustdata/autoevals) is open source.
 - [AgentOps](https://github.com/AgentOps-AI/agentops) - Python SDK for session replay, cost tracking, and benchmarking across CrewAI, OpenAI Agents, LangChain, and AG2.
+- [Noveum](https://noveum.ai/en/docs) - Hosted tracing and evaluation platform that turns application traces into datasets for comparing response quality, latency, and cost.
+
 
 ## Trace backends
 
