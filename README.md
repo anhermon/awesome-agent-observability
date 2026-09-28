@@ -96,6 +96,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [mcp-trace](https://github.com/anhermon/mcp-trace) - Small Go proxy that sits in front of an MCP server and emits an OpenTelemetry span per JSON-RPC tool call.
 - [ToolHive](https://github.com/stacklok/toolhive) - Runs MCP servers in containers with permission policies, secrets handling, and audit logging.
 - [MCPJungle](https://github.com/mcpjungle/MCPJungle) - Self-hosted registry and single proxy endpoint for the MCP servers an organisation runs.
+- [SandBase Harness](https://github.com/sandbaseai/sandbase-harness) - Self-hosted MCP agent runtime that keeps sessions, approvals, tool execution, and audit/replay records for governed runs.
 - [Docker MCP Gateway](https://github.com/docker/mcp-gateway) - Docker CLI plugin that fronts multiple MCP servers behind one gateway with container isolation.
 - [Snyk agent-scan](https://github.com/snyk/agent-scan) - Security scanner for MCP servers, agents, and skills; formerly Invariant Labs' `mcp-scan`.
 
