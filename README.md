@@ -71,6 +71,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [Autoevals](https://github.com/braintrustdata/autoevals) - Standalone library of model-graded and heuristic scorers usable outside Braintrust.
 - [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) - Live-web benchmark for evaluating browser and computer-use agents on 283 everyday tasks across 144 websites, with request interception and five execution-evidence layers.
 - [Agent QA](https://github.com/vostride/agent-qa) - Runs natural-language web/mobile application flows and records structured step evidence plus pass/fail results; it does not trace or score model or agent calls.
+- [HermesGate](https://github.com/hermes-labs-ai/hermes-gate) - Receipt-bound completion rail that runs a repository's own checks, records which content and tool versions were checked, and reuses a PASS only while those bytes still match, so an agent's own PR gets a repeatable, deterministic pre-review result.
 
 ## Guardrails and security
 
@@ -93,7 +94,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) - The specification itself; the source of truth for what a compliant client, server, and transport must do.
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector) - Official UI for calling an MCP server's tools by hand and reading the raw JSON-RPC traffic.
 - [MCP Registry](https://github.com/modelcontextprotocol/registry) - Official community registry service for publishing and discovering MCP servers, run by the same working group as the spec.
-- [mcp-trace](https://github.com/anhermon/mcp-trace) - Small Go proxy that sits in front of an MCP server and emits an OpenTelemetry span per JSON-RPC tool call.
+- [mcp-trace](https://github.com/anhermon/mcp-trace) - CLI and Docker proxy for MCP servers speaking stdio, Streamable HTTP, or HTTP+SSE; emits an OpenTelemetry span per tool call with duration, status, and propagated trace context. [v2.0.0](https://github.com/anhermon/mcp-trace/releases/tag/v2.0.0)
 - [ToolHive](https://github.com/stacklok/toolhive) - Runs MCP servers in containers with permission policies, secrets handling, and audit logging.
 - [MCPJungle](https://github.com/mcpjungle/MCPJungle) - Self-hosted registry and single proxy endpoint for the MCP servers an organisation runs.
 - [SandBase Harness](https://github.com/sandbaseai/sandbase-harness) - Self-hosted MCP agent runtime that keeps sessions, approvals, tool execution, and audit/replay records for governed runs.
