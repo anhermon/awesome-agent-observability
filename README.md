@@ -4,7 +4,7 @@
 
 Agents fail in ways ordinary services do not: a run is non-deterministic, spans a dozen model and tool calls, and "wrong" is a quality judgement rather than a status code. The projects below cover the resulting stack — OpenTelemetry conventions for GenAI, tracing backends, evaluation harnesses, guardrails, gateways, and Model Context Protocol tooling.
 
-Every entry was checked to resolve and to have been updated within the last 12 months at the time of the last audit (2026-07-30). Descriptions say what a project does, not what it markets.
+Every entry was checked to resolve and to have been updated within the last 12 months at the time of the last audit (2026-10-01). Descriptions say what a project does, not what it markets.
 
 ## Contents
 
@@ -40,10 +40,11 @@ Every entry was checked to resolve and to have been updated within the last 12 m
 - [Langtrace](https://github.com/Scale3-Labs/langtrace) - OpenTelemetry-based, self-hostable tracing and evaluation for LLM calls, vector-DB queries, and framework usage, with Python and TypeScript SDKs.
 - [Agenta](https://github.com/Agenta-AI/agenta) - Self-hostable workspace for authoring and versioning prompts and agents, with evaluation runs and tracing of each model and tool call.
 - [Pydantic Logfire](https://github.com/pydantic/logfire) - OTel-based observability with first-class Python, Pydantic, and agent instrumentation.
-- [W&B Weave](https://github.com/wandb/weave) - Weights & Biases toolkit for logging, comparing, and evaluating LLM app versions; [docs](https://docs.wandb.ai/weave).
+- [W&B Weave](https://github.com/wandb/weave) - Weights & Biases toolkit for logging, comparing, and evaluating LLM app versions; [docs](https://docs.coreweave.com/products/wandb/weave).
 - [MLflow Tracing](https://mlflow.org/docs/latest/genai/tracing/) - GenAI tracing built into [MLflow](https://github.com/mlflow/mlflow), so agent traces sit next to model runs and registries.
 - [Braintrust](https://www.braintrust.dev/docs/instrument) - Hosted eval and tracing platform; the scoring library [autoevals](https://github.com/braintrustdata/autoevals) is open source.
 - [AgentOps](https://github.com/AgentOps-AI/agentops) - Python SDK for session replay, cost tracking, and benchmarking across CrewAI, OpenAI Agents, LangChain, and AG2.
+- [AgentsView](https://github.com/kenn-io/agentsview) - Local-first session search, analytics, and token-use statistics across Claude Code, Codex, and other coding-agent session archives kept on your machine.
 
 ## Trace backends
 
@@ -78,6 +79,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [Guardrails AI](https://github.com/guardrails-ai/guardrails) - Runs input/output validators around a model call and enforces structured output.
 - [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) - NVIDIA toolkit for programmable dialogue rails defined in Colang.
 - [garak](https://github.com/NVIDIA/garak) - LLM vulnerability scanner probing for jailbreaks, prompt injection, and data leakage.
+- [DeepTeam](https://github.com/confident-ai/deepteam) - Red-teaming framework that simulates jailbreaks, prompt injection, and related attacks against LLM and agent apps, built on DeepEval.
 - [Presidio](https://github.com/data-privacy-stack/presidio) - PII detection, redaction, and anonymisation for text and images; useful for scrubbing traces before export.
 - [Invariant Guardrails](https://github.com/invariantlabs-ai/invariant) - Rule-based guardrail layer deployed between an app and its MCP servers or LLM provider; rules are Python-like matchers over tool-call sequences, so it can block a call pattern (e.g. "read one tool's output, then send it to an untrusted address") rather than just a single message.
 
@@ -86,6 +88,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [LiteLLM](https://github.com/BerriAI/litellm) - SDK and proxy exposing 100+ providers behind the OpenAI API, with cost tracking, logging, and callbacks to most platforms above.
 - [Portkey AI Gateway](https://github.com/Portkey-AI/gateway) - Routing gateway with retries, fallbacks, caching, and inline guardrails.
 - [Bifrost](https://github.com/maximhq/bifrost) - Go gateway that fronts multiple LLM providers behind one OpenAI-compatible API, with key load balancing, fallbacks, and plugin hooks for guardrails and telemetry.
+- [Agentgateway](https://github.com/agentgateway/agentgateway) - Open-source proxy for agent-to-LLM, agent-to-MCP, and agent-to-agent (A2A) traffic with routing, guardrails, RBAC, and OpenTelemetry.
 - [Traceloop Hub](https://github.com/traceloop/hub) - Small Rust LLM gateway from the OpenLLMetry authors, with OTel emission built in.
 - [Kong](https://github.com/Kong/kong) - API gateway whose AI plugins add LLM routing, token metrics, and request logging to an existing gateway deployment.
 
@@ -94,7 +97,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) - The specification itself; the source of truth for what a compliant client, server, and transport must do.
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector) - Official UI for calling an MCP server's tools by hand and reading the raw JSON-RPC traffic.
 - [MCP Registry](https://github.com/modelcontextprotocol/registry) - Official community registry service for publishing and discovering MCP servers, run by the same working group as the spec.
-- [mcp-trace](https://github.com/anhermon/mcp-trace) - CLI and Docker proxy for MCP servers speaking stdio, Streamable HTTP, or HTTP+SSE; emits an OpenTelemetry span per tool call with duration, status, and propagated trace context. [v2.0.0](https://github.com/anhermon/mcp-trace/releases/tag/v2.0.0)
+- [mcp-trace](https://github.com/anhermon/mcp-trace) - CLI and Docker proxy for MCP servers speaking stdio, Streamable HTTP, or HTTP+SSE; emits an OpenTelemetry span per tool call with duration, status, and propagated trace context. [v2.0.3](https://github.com/anhermon/mcp-trace/releases/tag/v2.0.3)
 - [ToolHive](https://github.com/stacklok/toolhive) - Runs MCP servers in containers with permission policies, secrets handling, and audit logging.
 - [MCPJungle](https://github.com/mcpjungle/MCPJungle) - Self-hosted registry and single proxy endpoint for the MCP servers an organisation runs.
 - [SandBase Harness](https://github.com/sandbaseai/sandbase-harness) - Self-hosted MCP agent runtime that keeps sessions, approvals, tool execution, and audit/replay records for governed runs.
