@@ -73,6 +73,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) - Live-web benchmark for evaluating browser and computer-use agents on 283 everyday tasks across 144 websites, with request interception and five execution-evidence layers.
 - [Agent QA](https://github.com/vostride/agent-qa) - Runs natural-language web/mobile application flows and records structured step evidence plus pass/fail results; it does not trace or score model or agent calls.
 - [HermesGate](https://github.com/hermes-labs-ai/hermes-gate) - Receipt-bound completion rail that runs a repository's own checks, records which content and tool versions were checked, and reuses a PASS only while those bytes still match, so an agent's own PR gets a repeatable, deterministic pre-review result.
+- [YYLO](https://github.com/yylo-dev/yylo) - Command-line orchestrator for coding agents that retains declared receipt hashes, session IDs, and terminal manifests per workflow run, keeps content-addressed task evidence tied to exact inputs, and treats missing or malformed terminal evidence as not success.
 
 ## Guardrails and security
 
