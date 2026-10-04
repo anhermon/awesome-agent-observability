@@ -1,0 +1,24 @@
+name: Report a stale, broken, or inaccurate entry
+description: An entry is archived, renamed, dead, unsafe, or no longer matches its description
+labels: [maintenance]
+body:
+  - type: input
+    id: entry
+    attributes:
+      label: Entry
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: Problem
+      options: [Archived or abandoned, Renamed or moved, Link is dead, Description is inaccurate, Does not work as described, Low quality, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Last commit date, archive banner, redirect target, or the command you ran and its output.
+    validations:
+      required: true

@@ -12,7 +12,9 @@ tracing or evaluation is a first-class part of them.
 ## Requirements
 
 - The link resolves and points at the canonical repo or docs page.
-- The project has been updated within the last 12 months and is not archived.
+- The project has been updated within the last 12 months, is not archived, and is not in end-of-life (a retirement notice counts even if commits continue).
+- You ran it. Install or build it and exercise the claim in your description, then say what you ran in the PR. Projects that are only a README, only weeks old, or mostly generated boilerplate do not make the list. Hosted-only products need public docs that back every claim in the description.
+- Licensing is stated when it is not plainly open source (open-core, source-available, AGPL, hosted backend).
 - One entry per project, in the category it best fits.
 - Format: `- [Name](link) - What it actually does.`
   - Sentence case, one line, ends with a period.

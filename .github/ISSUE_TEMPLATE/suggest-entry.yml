@@ -1,0 +1,37 @@
+name: Suggest an entry
+description: Propose a project for this list
+labels: [suggestion]
+body:
+  - type: input
+    id: link
+    attributes:
+      label: Canonical link
+    validations:
+      required: true
+  - type: dropdown
+    id: affiliation
+    attributes:
+      label: Your relationship to the project
+      options: [None, Maintainer or contributor, Employee of the vendor, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What it does
+      description: Observability, evaluation, or governance of LLM or agent apps. One or two plain sentences, no marketing language.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: What you ran
+      description: Commands you ran and what happened. Entries are verified hands-on, so say what you tested and what you could not.
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License
+    validations:
+      required: true
