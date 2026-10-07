@@ -23,6 +23,10 @@ tracing or evaluation is a first-class part of them.
 - Alphabetical order is not required; entries are roughly ordered by how
   central they are to the category.
 
+## How the list is maintained
+
+A weekly workflow (`scripts/audit.py`) opens or updates one tracking issue listing entries whose repository is gone, archived, renamed, or past the 12-month bar. A monthly hands-on pass re-runs entries and re-checks descriptions against the project, which the script cannot do.
+
 ## Removals
 
 Open a pull request or issue if an entry is archived, renamed, dead, or the
