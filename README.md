@@ -62,9 +62,13 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [TruLens](https://github.com/truera/trulens) - Instrumentation plus feedback functions that score app internals, not just final output.
 - [Evidently](https://github.com/evidentlyai/evidently) - Python framework for evals, drift detection, and monitoring across tabular, text, and GenAI systems.
 - [Inspect](https://github.com/UKGovernmentBEIS/inspect_ai) - UK AI Security Institute's eval framework, built for agentic tasks, tool use, and sandboxed execution.
+- [Inspect Scout](https://github.com/meridianlabs-ai/inspect_scout) - Scans agent transcripts from Inspect eval logs and other sources with LLM, grep, or custom scanners and writes queryable results, for finding failure patterns across runs; MIT.
 - [Giskard](https://github.com/Giskard-AI/giskard-oss) - Checks and red-team scans for LLM agents: multi-turn scenarios, LLM-judge checks, and probes for prompt injection and harmful content (v3; v2 is unmaintained).
 - [Scenario](https://github.com/langwatch/scenario) - Simulates multi-turn users against an agent so conversations, not single calls, can be asserted on.
 - [Autoevals](https://github.com/braintrustdata/autoevals) - Standalone library of model-graded and heuristic scorers usable outside Braintrust.
+- [OpenEvals](https://github.com/langchain-ai/openevals) - Readymade evaluators for LLM apps: LLM-as-judge prompts, exact and string-distance matchers, and structured-output checks, as functions that return scored results and plug into pytest or LangSmith, in Python and TypeScript.
+- [AgentEvals](https://github.com/langchain-ai/agentevals) - Evaluators that score an agent's tool-call trajectory against a reference with strict, unordered, subset, or superset matching, or with an LLM judge; MIT.
+- [AgentDojo](https://github.com/ethz-spylab/agentdojo) - ETH Zurich benchmark and framework for tool-using agents against prompt injection, with task suites and attack and defense pipelines that report utility and attack success.
 - [ClawBench](https://github.com/TIGER-AI-Lab/ClawBench) - Live-web benchmark for evaluating browser and computer-use agents on about 280 everyday tasks, with request interception and recorded execution evidence.
 - [HermesGate](https://github.com/hermes-labs-ai/hermes-gate) - Runs a repository's own checks and stores a receipt keyed to the content and tool versions checked; in `fast` and `review` modes an identical receipt is reused as a PASS and any change re-runs the checks, giving an agent's own PR a repeatable pre-review result.
 - [YYLO Benchmark](https://github.com/yylo-dev/yylo-benchmark) - Runs coding prompts and tasks across models and harnesses on fresh checkouts, keeps every output unchanged, and lets you re-evaluate them later with new checks or judges.
@@ -73,10 +77,12 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 
 - [Guardrails AI](https://github.com/guardrails-ai/guardrails) - Runs input/output validators around a model call and enforces structured output.
 - [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) - NVIDIA toolkit for input, output, dialogue, and tool rails defined in Colang and Python.
+- [OpenAI Guardrails](https://github.com/openai/openai-guardrails-python) - Drop-in OpenAI client wrapper that runs configurable input and output checks (keywords, secret keys, PII, URLs, moderation, jailbreak and prompt-injection detection) and raises on a tripwire; preview release.
 - [garak](https://github.com/NVIDIA/garak) - LLM vulnerability scanner probing for jailbreaks, prompt injection, and data leakage.
 - [DeepTeam](https://github.com/confident-ai/deepteam) - Red-teaming framework that simulates jailbreaks, prompt injection, and related attacks against LLM and agent apps, built on DeepEval.
 - [Presidio](https://github.com/data-privacy-stack/presidio) - PII detection, redaction, and anonymisation for text and images; useful for scrubbing traces before export.
 - [Snyk agent-scan](https://github.com/snyk/agent-scan) - Security scanner for MCP servers, agents, and skills, formerly Invariant Labs' `mcp-scan`; `inspect` lists what a config exposes locally, while `scan` needs a Snyk token and calls Snyk's hosted API.
+- [MCP Scanner](https://github.com/cisco-ai-defense/mcp-scanner) - Scans MCP servers' tools, prompts, resources, and instructions for poisoning and exfiltration patterns using YARA rules, optional LLM and behavioural analyzers, and a Cisco API analyzer; Apache-2.0.
 
 ## Gateways and proxies
 
@@ -95,6 +101,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [mcp-trace](https://github.com/anhermon/mcp-trace) - CLI proxy for MCP servers over SSE or Streamable HTTP that emits an OpenTelemetry span per tool call with duration, status, and propagated trace context, including Streamable HTTP tool calls that return `text/event-stream`. [v2.0.4](https://github.com/anhermon/mcp-trace/releases/tag/v2.0.4)
 - [ToolHive](https://github.com/stacklok/toolhive) - Runs MCP servers in containers with permission policies, secrets handling, and audit logging.
 - [MCPJungle](https://github.com/mcpjungle/MCPJungle) - Self-hosted registry and single gateway endpoint for the MCP servers an organisation runs.
+- [MCP Context Forge](https://github.com/IBM/mcp-context-forge) - Gateway and registry that federates MCP servers and REST APIs behind one endpoint, with auth, plugins, and OpenTelemetry tracing of tool calls; Apache-2.0.
 - [Docker MCP Gateway](https://github.com/docker/mcp-gateway) - Docker CLI plugin that fronts multiple MCP servers behind one gateway with container isolation.
 
 ## Agent frameworks with built-in tracing
