@@ -27,6 +27,7 @@ Entries say what a project does, not what it markets, and carry its license wher
 - [OpenLLMetry-JS](https://github.com/traceloop/openllmetry-js) - The same instrumentation for TypeScript and Node.js applications.
 - [OpenInference](https://github.com/Arize-ai/openinference) - OpenTelemetry-compatible tracing spec and instrumentation libraries for Python, JavaScript, Java, and Go from the Arize Phoenix team.
 - [OpenLIT](https://github.com/openlit/openlit) - OTel-native auto-instrumentation SDK for LLM, vector-database, and GPU calls, with a self-hosted UI to read the resulting traces.
+- [AgentMeasure](https://github.com/roy-tong/AgentMeasure) - Open standard and conformance vectors for agent usage metering: defines what counts as one operation versus one retried attempt, runs those vectors in CI against implementations with PASS/FAIL/UNPROVABLE verdicts, and publishes audits of 110+ usage-tracking tools with fixes submitted upstream.
 
 ## Tracing and observability platforms
 
