@@ -44,6 +44,7 @@ Entries say what a project does, not what it markets, and carry its license wher
 - [Braintrust](https://www.braintrust.dev/docs/instrument) - Hosted eval and tracing platform; see [Autoevals](https://github.com/braintrustdata/autoevals) below for its open-source scorers.
 - [AgentOps](https://github.com/AgentOps-AI/agentops) - Python SDK for session replay, cost tracking, and tracing across CrewAI, OpenAI Agents SDK, LangChain, AG2, and others; the SDK is MIT, the self-hostable app is Elastic License 2.0.
 - [AgentsView](https://github.com/kenn-io/agentsview) - Local-first session search, analytics, and token-use statistics for the Claude Code, Codex, and other coding-agent session archives on your machine; it analyses the agents you use, not apps you build.
+- [OpenClaw Monitor](https://github.com/flik2002/openclaw-monitor) - Self-hosted web dashboard for OpenClaw agents: reads the local session files and queries the gateway API for token usage, session status, and 7-day usage trends. Vue 3 + ECharts; MIT.
 
 ## Trace backends
 
