@@ -74,6 +74,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [HermesGate](https://github.com/roli-lpci/hermes-gate) - Runs a repository's own checks and stores a receipt keyed to the content and tool versions checked; in `fast` and `review` modes an identical receipt is reused as a PASS and any change re-runs the checks, giving an agent's own PR a repeatable pre-review result.
 - [YYLO Benchmark](https://github.com/yylo-dev/yylo-benchmark) - Runs coding prompts and tasks across models and harnesses on fresh checkouts, keeps every output unchanged, and lets you re-evaluate them later with new checks or judges.
 - [NovaFabric](https://github.com/MSKazemi/novafabric) - Self-hosted CLI whose `nova capture` wraps any command, such as an agent script, and records the run as a portable Run Capsule that you can replay and structurally diff against another run; Apache-2.0, pre-1.0.
+- [Agent-Casuality](https://github.com/Psionic-labs/Agent-Casuality) - Captures LangGraph and OpenCode agent runs as explicit causal event graphs, so a failing run can be sliced to the events that caused it, agent state can be reconstructed and verified at any point, and interventions can be replayed counterfactually; AGPL-3.0.
 
 ## Guardrails and security
 
