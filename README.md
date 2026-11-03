@@ -112,7 +112,7 @@ General-purpose OpenTelemetry backends that GenAI spans can be sent to when you 
 - [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) - Tracing is on by default and exports to OpenAI; custom processors send it to third-party platforms.
 - [Google ADK](https://github.com/google/adk-python) - Agent toolkit with built-in evaluation and OpenTelemetry-based tracing.
 - [Pydantic AI](https://github.com/pydantic/pydantic-ai) - Agent framework with opt-in OpenTelemetry instrumentation (`Agent.instrument_all()`), viewable in Logfire or any OTel backend.
-- [Cognipeer Agent SDK](https://github.com/Cognipeer/agent-sdk) - TypeScript agent runtime whose tracing exports each run as OpenTelemetry GenAI spans (`invoke_agent`, `chat`, `execute_tool`) over OTLP/HTTP to any collector; MIT.
+- [Cognipeer Agent SDK](https://github.com/Cognipeer/agent-sdk) - TypeScript agent runtime with opt-in tracing whose `otlpSink` or `otelTracing` plugin exports each run as OpenTelemetry GenAI spans (`invoke_agent`, `chat`, `execute_tool`) over OTLP/HTTP to any collector; MIT.
 
 ## Contributing
 
