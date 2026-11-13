@@ -45,6 +45,7 @@ Entries say what a project does, not what it markets, and carry its license wher
 - [AgentsView](https://github.com/kenn-io/agentsview) - Local-first session search, analytics, and token-use statistics for the Claude Code, Codex, and other coding-agent session archives on your machine; it analyses the agents you use, not apps you build.
 - [AgentMeasure](https://github.com/roy-tong/AgentMeasure) - Local CLI that reads Codex and Claude Code session logs and reports duplicate records, retry chains, and repeated tool failures, marking what the logs cannot decide as UNPROVABLE instead of zero.
 - [Noveum Trace](https://github.com/Noveum/noveum-trace) - Python SDK whose context managers trace operations, LLM calls, and agent steps and send them over HTTPS to the hosted Noveum platform or a custom endpoint; the SDK is Apache-2.0, the backend is hosted.
+- [Agnost AI](https://docs.agnost.ai/online-evals) - Hosted platform that has an LLM judge each finished agent conversation against plain-English rules, labels user intent and sentiment, and sends Slack or email alerts that can open a fix pull request; ingests OpenTelemetry, SDKs are MIT, the backend is hosted and closed.
 
 ## Trace backends
 
