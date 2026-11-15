@@ -5,9 +5,29 @@ Thanks for helping keep this list accurate.
 ## What belongs here
 
 A project qualifies if it helps you observe, evaluate, or govern an LLM or
-agent application: instrumentation, tracing, evals, guardrails, gateways that
-emit telemetry, or MCP-specific tooling. Model frameworks belong here only if
-tracing or evaluation is a first-class part of them.
+agent application, or the parts agents are built from: instrumentation,
+tracing, evals, guardrails, gateways that emit telemetry, or MCP-specific
+tooling. Model frameworks belong here only if tracing or evaluation is a
+first-class part of them.
+
+Evaluation is in scope for any of these subjects, with LLM-as-judge or
+deterministic grading (exact match, regex, schema checks, tests):
+
+- LLM, prompt, and RAG applications.
+- Agents, including agents built on a framework or SDK.
+- Agent harnesses, including CLI coding agents such as Claude Code, Codex CLI,
+  Gemini CLI, and OpenCode, run as the thing under test, and benchmark
+  harnesses that run them on tasks in a sandbox and grade the result.
+- Agent Skills: whether a skill triggers when it should and whether it
+  improves results over running without it.
+- MCP servers and clients: protocol conformance and how well agents complete
+  tasks with a server's tools.
+- Telemetry and usage data from coding agents.
+
+Out of scope: general model-capability leaderboards and benchmark runners that
+only score a model on static questions (for example lm-evaluation-harness),
+unless they also run agents or tools; prompt libraries; and agent frameworks
+whose tracing or evaluation is an add-on rather than built in.
 
 ## Requirements
 
@@ -20,9 +40,9 @@ These are the thresholds every entry is held to, at submission and at each audit
 | 3 | Not end-of-life | No retirement, sunset, or maintenance-mode-only notice from the maintainers, even if commits continue. | Remove, citing the notice. |
 | 4 | Old enough to judge | The project is at least 8 weeks old, counted from repository creation or first public release. | Decline; the author can resubmit once it passes. |
 | 5 | Real docs | A README or docs site with install or usage steps. Hosted-only products need public docs that back every claim in the description. | Decline or remove. |
-| 6 | In scope | It helps you observe, evaluate, or govern an LLM or agent application (see "What belongs here"). | Decline, recategorize, or remove. |
+| 6 | In scope | It helps you observe, evaluate, or govern an LLM or agent application, or evaluate an agent, harness, skill, or MCP server (see "What belongs here"). | Decline, recategorize, or remove. |
 | 7 | License stated | Stated in the description when not plainly open source: open-core (any `ee/` or `enterprise/` directory under a separate license), source-available, AGPL, or a hosted backend. | Fix the description. |
-| 8 | Hands-on | You installed or built it and exercised the claim in the description, and the PR says what you ran. Projects that are only a README or mostly generated boilerplate do not make the list. | Decline. |
+| 8 | Hands-on | You installed or built it and exercised the claim in the description, and the PR says what you ran. Running against a local model or a mock is fine when the claim does not depend on a specific provider; say so. Projects that are only a README or mostly generated boilerplate do not make the list. | Decline. |
 | 9 | One entry, one place | Each project appears once, in the category it best fits. | Merge or move. |
 | 10 | Format | `- [Name](link) - What it actually does.` Sentence case, one line, one sentence, ends with a period, describes behaviour rather than positioning. No "revolutionary", no "next-gen", no feature lists copied from a landing page. | Reword. |
 
