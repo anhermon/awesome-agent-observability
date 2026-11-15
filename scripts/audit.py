@@ -20,6 +20,12 @@ STALE_DAYS = 365
 WARN_DAYS = 270
 ENTRY = re.compile(r"^- \[(?P<name>[^\]]+)\]\((?P<url>https?://[^)]+)\)")
 REPO = re.compile(r"^https://github\.com/(?P<owner>[^/]+)/(?P<repo>[^/#?]+)")
+# Repositories with no repo-level license whose listed entry is a folder that
+# carries its own LICENSE file. Reported as "manual" so the weekly issue does
+# not stay open; re-read the folder's license at each hands-on pass.
+PER_FOLDER_LICENSE = {
+    "anthropics/skills": "no repo-level license; skills/skill-creator/LICENSE.txt is Apache-2.0",
+}
 
 
 def parse(text):
@@ -69,7 +75,11 @@ def judge(name, owner, repo, meta, last_commit, now):
         elif age > WARN_DAYS:
             found.append(("watch", f"last commit {age} days ago; goes stale in {STALE_DAYS - age} days"))
     if not (meta.get("license") or {}).get("spdx_id"):
-        found.append(("check", "no license detected by GitHub"))
+        note = PER_FOLDER_LICENSE.get(f"{owner}/{repo}".lower())
+        if note:
+            found.append(("manual", note))
+        else:
+            found.append(("check", "no license detected by GitHub"))
     return found
 
 

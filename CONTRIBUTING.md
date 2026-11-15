@@ -42,7 +42,7 @@ These are the thresholds every entry is held to, at submission and at each audit
 | 5 | Real docs | A README or docs site with install or usage steps. Hosted-only products need public docs that back every claim in the description. | Decline or remove. |
 | 6 | In scope | It helps you observe, evaluate, or govern an LLM or agent application, or evaluate an agent, harness, skill, or MCP server (see "What belongs here"). | Decline, recategorize, or remove. |
 | 7 | License stated | Stated in the description when not plainly open source: open-core (any `ee/` or `enterprise/` directory under a separate license), source-available, AGPL, or a hosted backend. | Fix the description. |
-| 8 | Hands-on | You installed or built it and exercised the claim in the description, and the PR says what you ran. Running against a local model or a mock is fine when the claim does not depend on a specific provider; say so. Projects that are only a README or mostly generated boilerplate do not make the list. | Decline. |
+| 8 | Hands-on | You installed or built it and exercised the claim in the description, and the PR says what you ran. Running against a local model or a mock is fine when the claim does not depend on a specific provider; say so in the PR. Projects that are only a README or mostly generated boilerplate do not make the list. | Decline. |
 | 9 | One entry, one place | Each project appears once, in the category it best fits. | Merge or move. |
 | 10 | Format | `- [Name](link) - What it actually does.` Sentence case, one line, one sentence, ends with a period, describes behaviour rather than positioning. No "revolutionary", no "next-gen", no feature lists copied from a landing page. | Reword. |
 
