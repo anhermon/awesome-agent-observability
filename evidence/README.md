@@ -9,6 +9,6 @@ Setup used for every run:
 - Vanilla Claude Code 2.1.289 was pointed at Ollama's Anthropic-compatible endpoint with `ANTHROPIC_BASE_URL=http://<host>:11434` and a dummy `ANTHROPIC_AUTH_TOKEN`. That is how "Claude Code as the harness under test" was exercised without a Claude subscription login on the box.
 - Small local models fail many tasks. These runs prove that each tool installs, runs the subject, and grades it as described; they are not quality numbers for the models.
 
-The first batch of files is from the evals-scope expansion (PR #41). The follow-up later the same day added `recipes.md`, `tau2-bench.md`, `mcp-atlas.md`, `bfcl.md`, and `ctxlens.md`.
+The first batch of files is from the evals-scope expansion (PR #41). The follow-up later the same day added `recipes.md`, `tau2-bench.md`, `mcp-atlas.md`, and `bfcl.md`.
 
 The 2026-11-16 scope pass (issue #47) added `pyrit.md` and `purplellama.md`, run the same way with local models or no model.
