@@ -31,6 +31,7 @@ Projects that were proposed and not added, or listed and later removed, with the
 | Helicone | 2026-10-15 | [#29](https://github.com/anhermon/awesome-agent-observability/pull/29) | Maintenance mode only since the March 2026 Mintlify acquisition (threshold 3). |
 | sealref | 2026-10-17 | [6f1264c](https://github.com/anhermon/awesome-agent-observability/commit/6f1264ce5a0c826a3c4c939260ffc1e6d4fc4fad) | Under 8 weeks old (threshold 4); the maintainer's own project, eligible to resubmit after 2026-11-26. |
 | mcp-trace | 2026-11-16 | [archive notice](https://github.com/anhermon/mcp-trace#readme) | Repository archived on 2026-11-16 (threshold 1); its README says the project is no longer developed (threshold 3). |
+| ctxlens (`AgentPostmortem/Ctxlens`) | 2026-11-18 | this pull request | The repository now returns 404 (threshold 1). No successor was found: the owner's organization now hosts an unrelated project, and the `ctxlens-cli` package on PyPI (0.1.1) still points at the missing repository. |
 
 ## Closed pull requests whose project is listed
 
