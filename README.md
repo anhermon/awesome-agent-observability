@@ -31,7 +31,7 @@ Find what you are evaluating or observing; the entries named are in the sections
 | You want to                                                | Start with                                                                       |
 | ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | Trace an LLM or agent app you build                        | OpenLLMetry or OpenInference into Langfuse, Phoenix, or a trace backend          |
-| See what a coding agent did and what it cost               | Claude Code monitoring, AI Observer, ccusage                           |
+| See what a coding agent did and what it cost               | Claude Code monitoring, AI Observer, ccusage                                     |
 | Score outputs with an LLM judge                            | DeepEval, Promptfoo, OpenEvals, Inspect                                          |
 | Score outputs deterministically                            | Inspect, Promptfoo, OpenEvals, SWE-bench, Harbor                                 |
 | Check an agent's tool-call path                            | AgentEvals, DeepEval                                                             |
