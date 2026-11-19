@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">Awesome Agent Observability</title>
+  <desc id="desc">A curated list of LLM and AI agent observability and evaluation tools. Tracing, evals, LLM-as-judge, guardrails, OpenTelemetry, MCP.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111C30"/>
+      <stop offset="1" stop-color="#0B1220"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80" cy="320" r="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2EC4B6" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#0B1220" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1280" height="640" fill="url(#glow)"/>
+  <rect x="0" y="0" width="14" height="640" fill="#2EC4B6"/>
+  <rect x="88" y="302.0" width="96" height="5" fill="#2EC4B6"/>
+  <text x="88" y="266.0" font-family="Liberation Sans, DejaVu Sans, Arial, sans-serif" font-size="72" font-weight="700" fill="#F4F7FB">Awesome Agent Observability</text>
+  <text x="88" y="351.0" font-family="Liberation Sans, DejaVu Sans, Arial, sans-serif" font-size="40" font-weight="400" fill="#D0D7E0">A curated list of LLM and AI agent</text>
+  <text x="88" y="403.0" font-family="Liberation Sans, DejaVu Sans, Arial, sans-serif" font-size="40" font-weight="400" fill="#D0D7E0">observability and evaluation tools</text>
+  <text x="88" y="467.0" font-family="Liberation Sans, DejaVu Sans, Arial, sans-serif" font-size="32" font-weight="400" fill="#C4E8E2">Tracing   ·   Evals   ·   LLM-as-judge   ·   Guardrails   ·   OpenTelemetry   ·   MCP</text>
+</svg>
