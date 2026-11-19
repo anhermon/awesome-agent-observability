@@ -128,6 +128,21 @@ def evidence_description(title: str, body: str) -> str:
     return f"Hands-on evidence for {title} in {SITE_NAME}."
 
 
+# Evidence pages whose first paragraphs would give a stale, partial, or
+# over-broad description. Each text is stated on the evidence page itself.
+DESCRIPTION_OVERRIDES = {
+    "bfcl": "Ran bfcl evaluate on a two-item fixture (accuracy 50%, 1 of 2); live generation against a model was not run.",
+    "ccusage": "ccusage run on real Claude Code session logs and cross-checked against OpenTelemetry events: it misses output tokens the transcript records as zero.",
+    "coder-eval": "One coder-eval task run with Claude Code on a local 4B model; both deterministic criteria failed correctly, from the small model, not the harness.",
+    "mcp-atlas": "Smoke run of MCP-Atlas in Docker with a local model: 13 of 20 default servers online; claim-level scoring was not run.",
+    "mcp-conformance": "Run log of the MCP conformance suite against the mcp-trace proxy, which was archived on 2026-11-16 and is no longer on this list.",
+    "mcpmark": "Hands-on run of MCPMark's filesystem service with a local 3B model; the GitHub, Notion, Playwright, Postgres and Supabase services were not exercised.",
+    "promptfoo": "Ran promptfoo against the Claude Agent SDK provider with deterministic assertions; the OpenAI Codex SDK provider was not run (Codex CLI not installed).",
+    "swe-bench": "Grading is deterministic: the reference patch is applied inside the per-instance Docker image and the held-out tests decide the result. No model was involved.",
+    "tau2-bench": "One tau2 mock-domain trial with a local 3B model reached max_steps (reward 0.000); the orchestrator, user simulator, tools and scorer all ran.",
+}
+
+
 def entry_names(body: str) -> list[str]:
     return ENTRY_RE.findall(body)
 
@@ -301,7 +316,7 @@ def evidence_pages() -> list[tuple[str, Path, str, str]]:
             text = text[match.end() :].lstrip()
         slug = path.stem if path.name != "README.md" else "index"
         dest = DOCS_DIR / "evidence" / f"{slug}.md"
-        desc = evidence_description(heading, text)
+        desc = DESCRIPTION_OVERRIDES.get(path.stem) or evidence_description(heading, text)
         pages.append((heading, dest, text, desc))
     return pages
 

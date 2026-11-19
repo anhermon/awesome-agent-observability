@@ -138,10 +138,6 @@ class Build(unittest.TestCase):
                 build_site.DOCS_DIR = original_docs
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class EvidenceDescription(unittest.TestCase):
     def test_skips_version_opener(self):
         body = (
@@ -183,3 +179,14 @@ class EvidenceDescription(unittest.TestCase):
             finally:
                 build_site.BUILD_DIR = original_build
                 build_site.DOCS_DIR = original_docs
+
+
+class DescriptionOverrides(unittest.TestCase):
+    def test_overrides_name_real_evidence_files_and_fit_the_limit(self):
+        for slug, text in build_site.DESCRIPTION_OVERRIDES.items():
+            self.assertTrue((Path("evidence") / f"{slug}.md").is_file(), slug)
+            self.assertLessEqual(len(text), 160, slug)
+
+
+if __name__ == "__main__":
+    unittest.main()
