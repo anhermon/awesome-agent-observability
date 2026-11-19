@@ -131,7 +131,7 @@ class Build(unittest.TestCase):
                 contributing = (docs / "contributing.md").read_text(encoding="utf-8")
                 self.assertIn("What belongs here", contributing)
                 yml = (build_site.BUILD_DIR / "mkdocs.yml").read_text(encoding="utf-8")
-                self.assertIn("site_url: https://anhermon.github.io/awesome-agent-observability/", yml)
+                self.assertIn("site_url: https://anhermon.dev/awesome-agent-observability/", yml)
                 self.assertIn("platform-comparison.md", yml)
             finally:
                 build_site.BUILD_DIR = original_build

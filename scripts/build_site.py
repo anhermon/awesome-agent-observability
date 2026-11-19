@@ -23,7 +23,7 @@ THEME_DIR = ROOT / "site-theme"
 HOOKS_PATH = Path(__file__).resolve().parent / "mkdocs_hooks.py"
 
 SITE_NAME = "Awesome Agent Observability"
-SITE_URL = "https://anhermon.github.io/awesome-agent-observability/"
+SITE_URL = "https://anhermon.dev/awesome-agent-observability/"
 REPO_URL = "https://github.com/anhermon/awesome-agent-observability"
 SITE_TAGLINE = (
     "Tools, standards, and benchmarks for tracing and evaluating AI products "
