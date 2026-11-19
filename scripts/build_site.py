@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Generate the GitHub Pages site from README.md and evidence/.
 
-The README is the single source for list content. Do not hand-edit files
+The README is the single source for list content. Write-ups come from
+evidence/, DECLINED.md, and the git history of the README. Do not hand-edit files
 under site-build/; this script recreates that directory on every run.
 """
 
@@ -11,6 +12,8 @@ import argparse
 import re
 import shutil
 from pathlib import Path
+
+import list_updates
 
 ROOT = Path(__file__).resolve().parents[1]
 README_PATH = ROOT / "README.md"
@@ -218,6 +221,8 @@ def rewrite_url(url: str, section_slugs: set[str]) -> str:
         return "contributing.md" + fragment
     if path == "DECLINED.md":
         return "declined.md" + fragment
+    if path in {"PROOF.md", "RELEASING.md"}:
+        return f"{REPO_URL}/blob/main/{path}" + fragment
     if path in {"evidence", "evidence/"}:
         return "evidence/index.md" + fragment
     if path.startswith("evidence/"):
@@ -321,6 +326,24 @@ def evidence_pages() -> list[tuple[str, Path, str, str]]:
     return pages
 
 
+
+def write_ups_section(verified: str) -> str:
+    date = f" (last verified {verified})" if verified else ""
+    return (
+        "## Write-ups\n\n"
+        f"- [Platform comparison]({COMPARISON_SLUG}.md){date}. "
+        "Every cell is sourced in [`evidence/comparison-table.md`](platform-comparison.md#sources).\n"
+        "- [List updates](updates/index.md): adds, removals, and renames from each month, "
+        "generated from the git history of the README, [DECLINED.md](declined.md), "
+        "and [`evidence/`](evidence/index.md).\n"
+    )
+
+
+def comparison_verified_date(platforms_body: str) -> str:
+    match = re.search(r"Last verified (\d{4}-\d{2}-\d{2})", platforms_body)
+    return match.group(1) if match else ""
+
+
 def nav_yaml(items: list[tuple[str, str]]) -> str:
     lines = ["nav:"]
     for title, filename in items:
@@ -346,6 +369,7 @@ hooks:
   - ../scripts/mkdocs_hooks.py
 not_in_nav: |
   evidence/**
+  updates/2*
 markdown_extensions:
   - tables
   - smarty
@@ -405,9 +429,9 @@ def build() -> list[str]:
             )
             nav_items.append((COMPARISON_TITLE, f"{COMPARISON_SLUG}.md"))
             generated.append(f"{COMPARISON_SLUG}.md")
-            home_body += f"- [{COMPARISON_TITLE}]({COMPARISON_SLUG}.md)\n"
-
-    write(DOCS_DIR / "index.md", front_matter(SITE_NAME, homepage_desc) + home_body + "\n")
+            verified = comparison_verified_date(platforms_body)
+            date_note = f" (last verified {verified})" if verified else ""
+            home_body += f"- [{COMPARISON_TITLE}]({COMPARISON_SLUG}.md){date_note}\n"
 
     declined_title, declined_body, declined_desc = declined_page(section_slugs)
     write(
@@ -422,6 +446,33 @@ def build() -> list[str]:
         page = front_matter(heading, desc) + f"# {heading}\n\n" + text + "\n"
         write(dest, page)
         generated.append(str(dest.relative_to(DOCS_DIR)))
+
+    months = list_updates.collect()
+    write(
+        DOCS_DIR / "updates" / "index.md",
+        front_matter(
+            "List updates",
+            "Adds, removals, and renames of list entries, generated from git history, DECLINED.md, and evidence/.",
+        )
+        + list_updates.index_markdown(months),
+    )
+    generated.append("updates/index.md")
+    for month_id, month in months.items():
+        dest = DOCS_DIR / "updates" / f"{month_id}.md"
+        write(
+            dest,
+            front_matter(
+                f"List updates, {month.title}",
+                f"Entry adds, removals, and renames in {month.title}, from the README git history and DECLINED.md.",
+            )
+            + list_updates.month_markdown(month),
+        )
+        generated.append(f"updates/{month_id}.md")
+    nav_items.append(("Updates", "updates/index.md"))
+
+    verified = comparison_verified_date(platforms_body or "")
+    home_body += "\n" + write_ups_section(verified)
+    write(DOCS_DIR / "index.md", front_matter(SITE_NAME, homepage_desc) + home_body + "\n")
 
     write_mkdocs_yml(nav_items, homepage_desc)
     return generated
