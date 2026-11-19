@@ -26,6 +26,7 @@ class Change:
     sha: str
     date: str
     subject: str
+    gone: bool = False  # the project was later removed, so do not link its URL
 
     @property
     def pr(self) -> str | None:
@@ -55,6 +56,7 @@ class Month:
     id: str  # YYYY-MM
     added: list[Change] = field(default_factory=list)
     removed: list[Change] = field(default_factory=list)
+    renamed: list[Change] = field(default_factory=list)  # name is "old -> new"
     declined: list[Decline] = field(default_factory=list)
 
     @property
@@ -77,6 +79,16 @@ def parse_entries(text: str) -> dict[str, str]:
     return entries
 
 
+def parse_entry_lines(text: str) -> dict[str, str]:
+    """Entry name to its full README line, used to spot "formerly X" renames."""
+    lines: dict[str, str] = {}
+    for line in text.splitlines():
+        match = re.match(r"^- \[([^\]]+)\]\(([^)]+)\)", line)
+        if match and not match.group(2).startswith("#"):
+            lines[match.group(1)] = line
+    return lines
+
+
 def _git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True)
 
@@ -91,7 +103,7 @@ def history_available() -> bool:
     return count >= 2
 
 
-def read_readme_history() -> list[tuple[str, str, str, dict[str, str]]]:
+def read_readme_history() -> list[tuple[str, str, str, dict[str, str], dict[str, str]]]:
     """Oldest-first first-parent snapshots of README entries."""
     log = _git("log", "--first-parent", "--format=%H %ad %s", "--date=short", "--", "README.md")
     rows = []
@@ -99,22 +111,41 @@ def read_readme_history() -> list[tuple[str, str, str, dict[str, str]]]:
         sha, date, *rest = line.split(" ", 2)
         subject = rest[0] if rest else ""
         text = _git("show", f"{sha}:README.md")
-        rows.append((sha, date, subject, parse_entries(text)))
+        rows.append((sha, date, subject, parse_entries(text), parse_entry_lines(text)))
     rows.reverse()
     return rows
 
 
-def changes_by_month(snapshots: list[tuple[str, str, str, dict[str, str]]] | None = None) -> dict[str, Month]:
+def find_renames(prev: dict[str, str], cur: dict[str, str], lines: dict[str, str]) -> dict[str, str]:
+    """Map old entry name to new name when the same project was renamed.
+
+    A rename is the same URL under a new name, or a new entry whose README line
+    says "formerly <old name>". Everything else that disappears is a removal.
+    """
+    renamed: dict[str, str] = {}
+    for old in set(prev) - set(cur):
+        for new in set(cur) - set(prev):
+            same_url = prev[old].rstrip("/") == cur[new].rstrip("/")
+            formerly = re.search(rf"\bformerly\s+{re.escape(old)}\b", lines.get(new, ""), re.I)
+            if same_url or formerly:
+                renamed[old] = new
+    return renamed
+
+
+def changes_by_month(snapshots: list[tuple] | None = None) -> dict[str, Month]:
     if snapshots is None:
         snapshots = read_readme_history()
     months: dict[str, Month] = {}
     prev: dict[str, str] = {}
-    for sha, date, subject, cur in snapshots:
+    for sha, date, subject, cur, *rest in snapshots:
         month_id = date[:7]
         month = months.setdefault(month_id, Month(id=month_id))
-        for name in sorted(set(cur) - set(prev)):
+        renamed = find_renames(prev, cur, rest[0] if rest else {})
+        for old, new in sorted(renamed.items()):
+            month.renamed.append(Change(f"{old} -> {new}", cur[new], sha, date, subject))
+        for name in sorted(set(cur) - set(prev) - set(renamed.values())):
             month.added.append(Change(name, cur[name], sha, date, subject))
-        for name in sorted(set(prev) - set(cur)):
+        for name in sorted(set(prev) - set(cur) - set(renamed)):
             month.removed.append(Change(name, prev.get(name, ""), sha, date, subject))
         prev = cur
     return months
@@ -195,13 +226,6 @@ def evidence_for(name: str) -> str | None:
     path = ev / f"{key}.md"
     if path.is_file():
         return f"evidence/{path.name}"
-    # fallback: stem contained in name or vice versa
-    for cand in ev.glob("*.md"):
-        if cand.name in {"README.md", "comparison-table.md", "recipes.md"}:
-            continue
-        stem = cand.stem
-        if stem in slug or slug in stem:
-            return f"evidence/{cand.name}"
     return None
 
 
@@ -209,8 +233,10 @@ def github_blob(path: str) -> str:
     return f"{REPO_URL}/blob/main/{path}"
 
 
-def _change_line(change: Change, include_evidence: bool = True, prefix: str = "") -> str:
-    parts = [f"- [{change.name}]({change.url}) on {change.date}, recorded in [{change.sha[:7]}]({change.commit_url})"]
+def _change_line(change: Change, include_evidence: bool = True, prefix: str = "", link_project: bool = True) -> str:
+    # Removed projects often no longer exist upstream, so their lines do not link the project URL.
+    label = f"[{change.name}]({change.url})" if link_project and not change.gone else change.name
+    parts = [f"- {label} on {change.date}, recorded in [{change.sha[:7]}]({change.commit_url})"]
     if change.pr:
         parts.append(f" ([{'#' + change.pr}]({change.pr_url}))")
     parts.append(".")
@@ -238,7 +264,7 @@ def month_markdown(month: Month, prefix: str = "../") -> str:
         "",
         "This page is generated from the git history of the README, from "
         f"[DECLINED.md]({declined}), and from [`evidence/`]({evidence_index}). "
-        "It lists only entry adds and removals those sources show. "
+        "It lists only entry adds, removals, and renames those sources show. "
         "Description-only edits are omitted.",
         "",
     ]
@@ -248,11 +274,20 @@ def month_markdown(month: Month, prefix: str = "../") -> str:
         for change in month.added:
             lines.append(_change_line(change, prefix=prefix))
         lines.append("")
+    if month.renamed:
+        lines.append("## Renamed")
+        lines.append("")
+        lines.append("Same project under a new name; these are not removals.")
+        lines.append("")
+        for change in month.renamed:
+            lines.append(f"- {change.name} on {change.date}, recorded in [{change.sha[:7]}]({change.commit_url})"
+                         + (f" ([#{change.pr}]({change.pr_url}))" if change.pr else "") + ".")
+        lines.append("")
     if month.removed:
         lines.append("## Removed")
         lines.append("")
         for change in month.removed:
-            lines.append(_change_line(change, include_evidence=False, prefix=prefix))
+            lines.append(_change_line(change, include_evidence=False, prefix=prefix, link_project=False))
         lines.append("")
     declined_only = [d for d in month.declined if d.kind == "declined"]
     removed_reasons = [d for d in month.declined if d.kind == "removed"]
@@ -270,7 +305,7 @@ def month_markdown(month: Month, prefix: str = "../") -> str:
         for item in removed_reasons:
             lines.append(_decline_line(item, prefix=prefix))
         lines.append("")
-    if not (month.added or month.removed or month.declined):
+    if not (month.added or month.removed or month.renamed or month.declined):
         lines.append("No entry adds or removals are recorded for this month.")
         lines.append("")
     return "\n".join(lines)
@@ -280,7 +315,7 @@ def index_markdown(months: dict[str, Month]) -> str:
     lines = [
         "# List updates",
         "",
-        "Adds and removals of list entries, generated from the git history of "
+        "Adds, removals, and renames of list entries, generated from the git history of "
         "the README, from [DECLINED.md](../declined.md), and from "
         "[`evidence/`](../evidence/index.md). "
         "Each month is a dated page. These notes are also the source for a "
@@ -293,6 +328,8 @@ def index_markdown(months: dict[str, Month]) -> str:
         summary = []
         if n_add:
             summary.append(f"{n_add} added")
+        if month.renamed:
+            summary.append(f"{len(month.renamed)} renamed")
         if n_rem:
             summary.append(f"{n_rem} removed")
         if any(d.kind == "declined" for d in month.declined):
@@ -325,6 +362,12 @@ def release_notes(month_id: str, months: dict[str, Month] | None = None) -> str:
             ref = f"#{change.pr}" if change.pr else change.sha[:7]
             lines.append(f"- {change.name} ({change.date}, {ref})")
         lines.append("")
+    if month.renamed:
+        lines.append("Renamed:")
+        for change in month.renamed:
+            ref = f"#{change.pr}" if change.pr else change.sha[:7]
+            lines.append(f"- {change.name} ({change.date}, {ref})")
+        lines.append("")
     if month.removed:
         lines.append("Removed:")
         for change in month.removed:
@@ -342,10 +385,18 @@ def release_notes(month_id: str, months: dict[str, Month] | None = None) -> str:
     return "\n".join(lines)
 
 
+def mark_gone(months: dict[str, Month]) -> dict[str, Month]:
+    removed = {c.name for m in months.values() for c in m.removed}
+    for m in months.values():
+        for c in m.added:
+            c.gone = c.name in removed
+    return months
+
+
 def collect() -> dict[str, Month]:
     if not history_available():
         raise SystemExit(
             "git history is too shallow to generate the updates pages; "
             "check out the full history (fetch-depth: 0)"
         )
-    return months_with_declines(changes_by_month())
+    return mark_gone(months_with_declines(changes_by_month()))

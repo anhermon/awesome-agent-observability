@@ -2,7 +2,7 @@
 """Generate the GitHub Pages site from README.md and evidence/.
 
 The README is the single source for list content. Write-ups come from
-PROOF.md, evidence/, DECLINED.md, and the git history of the README. Do not hand-edit files
+evidence/, DECLINED.md, and the git history of the README. Do not hand-edit files
 under site-build/; this script recreates that directory on every run.
 """
 
@@ -221,10 +221,8 @@ def rewrite_url(url: str, section_slugs: set[str]) -> str:
         return "contributing.md" + fragment
     if path == "DECLINED.md":
         return "declined.md" + fragment
-    if path == "PROOF.md":
-        return "proof.md" + fragment
-    if path == "RELEASING.md":
-        return f"{REPO_URL}/blob/main/RELEASING.md" + fragment
+    if path in {"PROOF.md", "RELEASING.md"}:
+        return f"{REPO_URL}/blob/main/{path}" + fragment
     if path in {"evidence", "evidence/"}:
         return "evidence/index.md" + fragment
     if path.startswith("evidence/"):
@@ -329,38 +327,13 @@ def evidence_pages() -> list[tuple[str, Path, str, str]]:
 
 
 
-PROOF_TITLE = "We evaluated our own agents with tools from this list"
-PROOF_SLUG = "proof"
-
-
-def proof_page(section_slugs: set[str]) -> tuple[str, str, str]:
-    path = ROOT / "PROOF.md"
-    if not path.is_file():
-        raise SystemExit(f"missing {path}")
-    text = path.read_text(encoding="utf-8")
-    text = re.sub(r"^# .+\n+", "", text).lstrip()
-    body = rewrite_links(text, section_slugs).strip() + "\n"
-    # Python-Markdown's slug drops the em dash; GitHub's link used a double hyphen.
-    body = body.replace(
-        "](#round-2-angels-mac-real-subscriptions--2026-11-15)",
-        "](#round-2-angels-mac-real-subscriptions-2026-11-15)",
-    )
-    desc = (
-        "Dated record of the 2026-11-15 proof rounds: evaluating and observing "
-        "the maintainer's own agents with tools from this list."
-    )
-    return PROOF_TITLE, body, desc
-
-
 def write_ups_section(verified: str) -> str:
     date = f" (last verified {verified})" if verified else ""
     return (
         "## Write-ups\n\n"
         f"- [Platform comparison]({COMPARISON_SLUG}.md){date}. "
         "Every cell is sourced in [`evidence/comparison-table.md`](platform-comparison.md#sources).\n"
-        f"- [{PROOF_TITLE}]({PROOF_SLUG}.md) (2026-11-15). "
-        "Source: [PROOF.md](proof.md).\n"
-        "- [List updates](updates/index.md): adds and removals from each month, "
+        "- [List updates](updates/index.md): adds, removals, and renames from each month, "
         "generated from the git history of the README, [DECLINED.md](declined.md), "
         "and [`evidence/`](evidence/index.md).\n"
     )
@@ -414,7 +387,6 @@ def build() -> list[str]:
     section_slugs = {s["slug"] for s in sections if s["title"] not in SKIP_SECTION_PAGES}
     section_slugs.add("contributing")
     section_slugs.add(COMPARISON_SLUG)
-    section_slugs.add("proof")
 
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
@@ -475,21 +447,12 @@ def build() -> list[str]:
         write(dest, page)
         generated.append(str(dest.relative_to(DOCS_DIR)))
 
-    proof_title, proof_body, proof_desc = proof_page(section_slugs)
-    write(
-        DOCS_DIR / f"{PROOF_SLUG}.md",
-        front_matter(proof_title, proof_desc) + f"# {proof_title}\n\n" + proof_body,
-    )
-    nav_items.append(("Proof", f"{PROOF_SLUG}.md"))
-    generated.append(f"{PROOF_SLUG}.md")
-    section_slugs.add(PROOF_SLUG)
-
     months = list_updates.collect()
     write(
         DOCS_DIR / "updates" / "index.md",
         front_matter(
             "List updates",
-            "Adds and removals of list entries, generated from git history, DECLINED.md, and evidence/.",
+            "Adds, removals, and renames of list entries, generated from git history, DECLINED.md, and evidence/.",
         )
         + list_updates.index_markdown(months),
     )
@@ -500,7 +463,7 @@ def build() -> list[str]:
             dest,
             front_matter(
                 f"List updates, {month.title}",
-                f"Entry adds and removals in {month.title}, from the README git history and DECLINED.md.",
+                f"Entry adds, removals, and renames in {month.title}, from the README git history and DECLINED.md.",
             )
             + list_updates.month_markdown(month),
         )
