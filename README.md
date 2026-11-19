@@ -125,6 +125,7 @@ Telemetry, usage, and cost analysis for CLI coding agents such as Claude Code, C
 - [ccusage](https://github.com/ccusage/ccusage) - CLI that reads the local session logs of Claude Code, Codex, OpenCode, and other coding-agent CLIs and reports token use and estimated cost by day, week, month, or session, and for Claude Code by 5-hour billing block; MIT.
 - [Verovo](https://github.com/roy-tong/Verovo) - Local CLI, formerly AgentMeasure, whose `check` command reads Codex and Claude Code session logs and reports duplicate records, retry chains, and repeated tool failures, marking what the logs cannot decide as UNPROVABLE; most of its other commands audit AI vendor bills against usage records; MIT.
 - [ranwhat](https://github.com/MatijaMiki/ranwhat) - CLI that reads the session history that Claude Code and 29 other coding agents keep on your machine and reports, after the fact, the risky actions they ran (credential file reads, destructive Git commands and deletes, package publishing) and the secrets left in the transcripts; MIT, with an optional paid hosted plan for syncing findings across machines.
+- [L2Cache Session Viewer](https://l2cache.app/en/tools/claude-session-viewer) - Free hosted, closed-source web tool that parses Claude Code, Codex CLI, Copilot CLI and Grok Build session JSONL in the browser and flags each turn where an expired prompt cache rewrote the conversation, with its token count.
 
 ## Evaluation and testing
 
