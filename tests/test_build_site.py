@@ -140,3 +140,46 @@ class Build(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EvidenceDescription(unittest.TestCase):
+    def test_skips_version_opener(self):
+        body = (
+            "Version: `deepeval` 4.3.4.\n\n"
+            "```bash\nuv pip install deepeval\n```\n\n"
+            "Tool correctness ran in about 2 seconds with no model call.\n"
+        )
+        desc = build_site.evidence_description("DeepEval", body)
+        self.assertNotIn("Version:", desc)
+        self.assertIn("Tool correctness ran", desc)
+
+    def test_prefers_claim_paragraph(self):
+        body = (
+            "Checked 2026-11-15 with promptfoo 0.120.19 from npm.\n\n"
+            "Claim in the rewritten line: runs test cases against agent providers.\n"
+        )
+        desc = build_site.evidence_description("Promptfoo", body)
+        self.assertEqual(desc, "Runs test cases against agent providers.")
+        self.assertNotIn("Checked 2026-11-15", desc)
+
+    def test_built_evidence_pages_are_not_version_stubs(self):
+        import tempfile
+        original_build = build_site.BUILD_DIR
+        original_docs = build_site.DOCS_DIR
+        with tempfile.TemporaryDirectory() as tmp:
+            build_site.BUILD_DIR = Path(tmp) / "site-build"
+            build_site.DOCS_DIR = build_site.BUILD_DIR / "docs"
+            try:
+                build_site.build()
+                deepeval = (build_site.DOCS_DIR / "evidence" / "deepeval.md").read_text(
+                    encoding="utf-8"
+                )
+                self.assertNotIn('description: "Version:', deepeval)
+                self.assertIn("description:", deepeval)
+                promptfoo = (build_site.DOCS_DIR / "evidence" / "promptfoo.md").read_text(
+                    encoding="utf-8"
+                )
+                self.assertNotIn('description: "Checked 2026-11-15', promptfoo)
+            finally:
+                build_site.BUILD_DIR = original_build
+                build_site.DOCS_DIR = original_docs

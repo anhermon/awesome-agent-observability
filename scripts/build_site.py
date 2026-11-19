@@ -72,11 +72,60 @@ def first_paragraph(body: str) -> str:
 def first_prose(body: str) -> str | None:
     for para in body.split("\n\n"):
         piece = para.strip()
-        if not piece or piece.startswith(("- ", "|", "#", ">")):
+        if not piece or piece.startswith(("- ", "|", "#", ">", "```")):
             continue
         # A paragraph that is only a bold heading plus text is still prose.
         return strip_markdown(piece)
     return None
+
+
+SETUP_PROSE_RE = re.compile(
+    r"^(Version\b|Checked \d{4}-\d{2}-\d{2}|Metadata:|Commit [0-9a-f]{7}|"
+    r"Installed from |Setup:|Auth:|Model:)",
+    re.I,
+)
+CLAIM_PREFIX_RE = re.compile(
+    r"^Claim(?: in the (?:list|rewritten) line)?:\s*",
+    re.I,
+)
+
+
+def is_setup_prose(text: str) -> bool:
+    """True for version, date-checked, and other metadata openers."""
+    stripped = text.strip()
+    if SETUP_PROSE_RE.match(stripped):
+        return True
+    # Labels such as "Run:", "Output:", "Script (abridged):"
+    if len(stripped) <= 40 and stripped.endswith(":"):
+        return True
+    if re.match(
+        r"^Claims? in the list line, and where each comes from:$",
+        stripped,
+        re.I,
+    ):
+        return True
+    return False
+
+
+def evidence_description(title: str, body: str) -> str:
+    """Meta description from a meaningful sentence, not 'Version: 1.2.3.'"""
+    paras: list[str] = []
+    for para in body.split("\n\n"):
+        piece = para.strip()
+        if not piece or piece.startswith(("- ", "|", "#", ">", "```")):
+            continue
+        paras.append(strip_markdown(piece))
+    for piece in paras:
+        if CLAIM_PREFIX_RE.match(piece):
+            cleaned = CLAIM_PREFIX_RE.sub("", piece).strip()
+            if cleaned:
+                if cleaned[0].islower():
+                    cleaned = cleaned[0].upper() + cleaned[1:]
+                return shorten(cleaned)
+    for piece in paras:
+        if not is_setup_prose(piece):
+            return shorten(piece)
+    return f"Hands-on evidence for {title} in {SITE_NAME}."
 
 
 def entry_names(body: str) -> list[str]:
@@ -252,7 +301,7 @@ def evidence_pages() -> list[tuple[str, Path, str, str]]:
             text = text[match.end() :].lstrip()
         slug = path.stem if path.name != "README.md" else "index"
         dest = DOCS_DIR / "evidence" / f"{slug}.md"
-        desc = description_for(heading, text)
+        desc = evidence_description(heading, text)
         pages.append((heading, dest, text, desc))
     return pages
 
