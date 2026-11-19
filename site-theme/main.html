@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- set page_title = config.site_name if page.is_homepage else (page.title ~ ' · ' ~ config.site_name) %}
+  {%- set page_desc = page.meta.description if page.meta and page.meta.description else config.site_description %}
+  <title>{{ page_title }}</title>
+  {%- if page_desc %}
+  <meta name="description" content="{{ page_desc }}">
+  {%- endif %}
+  {%- if page.canonical_url %}
+  <link rel="canonical" href="{{ page.canonical_url }}">
+  <meta property="og:url" content="{{ page.canonical_url }}">
+  {%- endif %}
+  <meta property="og:title" content="{{ page_title }}">
+  {%- if page_desc %}
+  <meta property="og:description" content="{{ page_desc }}">
+  {%- endif %}
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="{{ 'assets/site.css'|url }}">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      {%- if page.is_homepage %}
+      <h1 class="site-title">{{ config.site_name }}</h1>
+      {%- else %}
+      <p class="site-title"><a href="{{ nav.homepage.url|url }}">{{ config.site_name }}</a></p>
+      {%- endif %}
+      <p class="site-tagline">A curated list of LLM and AI agent observability and evaluation tools.</p>
+      <details class="nav-menu">
+        <summary>Sections</summary>
+        <nav class="site-nav" aria-label="Sections">
+          {%- for item in nav %}
+          <a href="{{ item.url|url }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.title }}</a>
+          {%- endfor %}
+        </nav>
+      </details>
+      <nav class="site-nav site-nav-wide" aria-label="Sections">
+        {%- for item in nav %}
+        <a href="{{ item.url|url }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.title }}</a>
+        {%- endfor %}
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="site-main">
+    {{ page.content }}
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Generated from the <a href="{{ config.repo_url }}">README</a> in {{ config.repo_name }}. The list in the repository is the source; this site is built from it.</p>
+      <p>Maintained by <a href="https://anhermon.dev">Angel Hermon</a>. <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
