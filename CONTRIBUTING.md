@@ -60,6 +60,8 @@ Alphabetical order is not required; entries are roughly ordered by how central t
 
 A weekly workflow (`scripts/audit.py`) opens or updates one tracking issue listing entries whose repository is gone, archived, renamed, or past the 12-month bar, and non-GitHub links that are dead, erroring, or permanently redirected, with the new URL (thresholds 1 and 2). It closes the issue when a run finds nothing to act on. A monthly hands-on pass re-runs entries and re-checks descriptions against the project (thresholds 3 to 10), which the script cannot do: maintenance-mode announcements, open-core licensing, scope, and whether the description is still true.
 
+The GitHub Pages site is generated from the README and `evidence/` at build time (`scripts/build_site.py`). Do not hand-edit files under `site-build/`.
+
 ## Removals
 
 Open a pull request or issue if an entry is archived, renamed, dead, or the

@@ -1,0 +1,4 @@
+# Standalone theme for the generated list site.
+static_templates: []
+include_search_page: false
+search_index_only: false
