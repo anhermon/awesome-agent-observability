@@ -9,11 +9,10 @@ on:
 # Deploy only happens on main. Pull requests build the site to catch breakage.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
+# One group per ref, so a pull request build can never replace a queued deploy on main.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -43,6 +42,10 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
