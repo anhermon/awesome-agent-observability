@@ -2,7 +2,7 @@
 
 > Note (2026-11-16): mcp-trace was archived on 2026-11-16 and is no longer on the list; this record is kept as the run log of that date.
 
-The patterns themselves were exercised during the 2026-11-15 proof run (`/workspace/aao-proof-2026-11-15/PROOF.md`) unless noted. This file only records what was re-checked or newly confirmed for the list wording.
+The patterns themselves were exercised during the 2026-11-15 proof run unless noted. This file only records what was re-checked or newly confirmed for the list wording.
 
 ## Trace any CLI harness through a gateway
 
@@ -10,7 +10,7 @@ Proof run: LiteLLM (`callbacks: otel`) → OpenTelemetry Collector file exporter
 
 ## Run MCP Conformance through a proxy, including stdio
 
-Proof run: official MCP Conformance `server` suite against the reference everything-server, direct vs through mcp-trace. Direct: 40/40 in 3 s. Through mcp-trace on main: 27/32 in 242 s (sampling/elicitation timeouts). Through the fixed proxy: 39/40 in 3 s. The harness-arena stdio MCP server was tested by pointing the suite at `mcp-trace --stdio` as the HTTP bridge; initialize, ping, and tools/list passed.
+Proof run: official MCP Conformance `server` suite against the reference everything-server, direct vs through mcp-trace. Direct: 40/40 in 3 s. Through mcp-trace on main: 27/32 in 242 s (sampling/elicitation timeouts). Through the fixed proxy: 39/40 in 3 s. A stdio MCP server from a private harness was tested by pointing the suite at `mcp-trace --stdio` as the HTTP bridge; initialize, ping, and tools/list passed.
 
 ## Run a harness eval without Docker
 
