@@ -292,8 +292,7 @@ code {
   background: #eef3f6;
   padding: 0.05em 0.22em;
   border-radius: 3px;
-  overflow-wrap: normal;
-  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 .site-footer {

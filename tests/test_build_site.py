@@ -133,6 +133,19 @@ class Build(unittest.TestCase):
                 yml = (build_site.BUILD_DIR / "mkdocs.yml").read_text(encoding="utf-8")
                 self.assertIn("site_url: https://anhermon.dev/awesome-agent-observability/", yml)
                 self.assertIn("platform-comparison.md", yml)
+                self.assertIn("proof.md", pages)
+                self.assertIn("updates/index.md", pages)
+                self.assertIn("updates/2026-11.md", pages)
+                proof = (docs / "proof.md").read_text(encoding="utf-8")
+                self.assertIn("We evaluated our own agents with tools from this list", proof)
+                self.assertIn("2026-11-15", proof)
+                self.assertNotIn("anhermon.github.io", proof)
+                home = (docs / "index.md").read_text(encoding="utf-8")
+                self.assertIn("## Write-ups", home)
+                self.assertIn("last verified 2026-11-16", home)
+                nov = (docs / "updates" / "2026-11.md").read_text(encoding="utf-8")
+                self.assertIn("mcp-trace", nov)
+                self.assertIn("Harbor", nov)
             finally:
                 build_site.BUILD_DIR = original_build
                 build_site.DOCS_DIR = original_docs
